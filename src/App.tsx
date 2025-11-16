@@ -12,6 +12,8 @@ import Events from "./pages/Events";
 import Register from "./pages/Register";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/admin/Dashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,18 +24,29 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/activities" element={<Activities />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<Dashboard />} />
+          <Route
+            path="*"
+            element={
+              <>
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/activities" element={<Activities />} />
+                  <Route path="/events" element={<Events />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/gallery" element={<Gallery />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                <Footer />
+              </>
+            }
+          />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

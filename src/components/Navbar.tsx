@@ -48,6 +48,9 @@ const Navbar = () => {
             <Link to="/register">
               <Button className="ml-4">Join Now</Button>
             </Link>
+            <Link to="/auth">
+              <Button variant="outline" className="ml-2">Admin</Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -78,6 +81,9 @@ const Navbar = () => {
             ))}
             <Link to="/register" onClick={() => setIsOpen(false)}>
               <Button className="w-full">Join Now</Button>
+            </Link>
+            <Link to="/auth" onClick={() => setIsOpen(false)}>
+              <Button variant="outline" className="w-full">Admin</Button>
             </Link>
           </div>
         )}
