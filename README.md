@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![E-MUST Logo](public/favicon.ico)
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/4d4c48b0-c919-422d-a75a-5d5c82ca3d5f" />
 
 **Building Unity, Fostering Excellence** 🌟
 
