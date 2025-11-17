@@ -59,7 +59,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="https://wa.me/254799522014" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
+                <a href="https://chat.whatsapp.com/IV140g1B3H97RTUghLzXfa" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
                   WhatsApp Group
                 </a>
               </li>
