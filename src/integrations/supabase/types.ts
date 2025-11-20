@@ -128,6 +128,72 @@ export type Database = {
         }
         Relationships: []
       }
+      messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          status: string
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          status?: string
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          status?: string
+          subject?: string | null
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          content: string
+          created_at: string
+          created_by: string | null
+          display_order: number | null
+          id: string
+          image_url: string | null
+          is_featured: boolean
+          member_name: string
+          role: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          created_by?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean
+          member_name: string
+          role?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          created_by?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean
+          member_name?: string
+          role?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
