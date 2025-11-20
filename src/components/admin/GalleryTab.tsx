@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { compressImage } from "@/lib/imageCompression";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,13 +39,17 @@ const GalleryTab = () => {
 
     setUploading(true);
     try {
+      // Compress image before upload
+      const compressedBlob = await compressImage(file);
+      const compressedFile = new File([compressedBlob], file.name, { type: file.type });
+
       const fileExt = file.name.split(".").pop();
       const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${fileName}`;
+      const filePath = `gallery/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from("emust-images")
-        .upload(filePath, file);
+        .upload(filePath, compressedFile);
 
       if (uploadError) throw uploadError;
 

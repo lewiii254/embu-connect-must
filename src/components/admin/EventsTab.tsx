@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { compressImage } from "@/lib/imageCompression";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,8 +13,8 @@ import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 const EventsTab = () => {
-  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -21,6 +22,41 @@ const EventsTab = () => {
     event_date: "",
     poster_url: "",
   });
+
+  const queryClient = useQueryClient();
+
+  const handlePosterUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const compressedBlob = await compressImage(file, 1200, 1600, 0.85);
+      const compressedFile = new File([compressedBlob], file.name, { type: file.type });
+
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `event-posters/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("emust-images")
+        .upload(filePath, compressedFile);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from("emust-images")
+        .getPublicUrl(filePath);
+
+      setFormData({ ...formData, poster_url: publicUrl });
+      toast.success("Poster uploaded successfully!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Failed to upload poster");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const { data: events, isLoading } = useQuery({
     queryKey: ["admin-events"],
@@ -129,17 +165,26 @@ const EventsTab = () => {
                     required
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="poster_url">Poster URL (optional)</Label>
+                <div>
+                  <Label htmlFor="poster">Event Poster</Label>
                   <Input
-                    id="poster_url"
-                    type="url"
-                    value={formData.poster_url}
-                    onChange={(e) => setFormData({ ...formData, poster_url: e.target.value })}
-                    placeholder="https://example.com/poster.jpg"
+                    id="poster"
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePosterUpload}
+                    disabled={uploading}
                   />
+                  {formData.poster_url && (
+                    <div className="mt-2">
+                      <img 
+                        src={formData.poster_url} 
+                        alt="Poster preview" 
+                        className="h-32 object-cover rounded"
+                      />
+                    </div>
+                  )}
                 </div>
-                <Button type="submit" className="w-full" disabled={createEvent.isPending}>
+                <Button type="submit" className="w-full" disabled={createEvent.isPending || uploading}>
                   {createEvent.isPending ? "Creating..." : "Create Event"}
                 </Button>
               </form>

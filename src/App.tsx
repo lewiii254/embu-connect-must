@@ -13,6 +13,7 @@ import Events from "./pages/Events";
 import Register from "./pages/Register";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Testimonials from "./pages/Testimonials";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/admin/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -41,6 +42,7 @@ const App = () => (
                   <Route path="/register" element={<Register />} />
                   <Route path="/gallery" element={<Gallery />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/testimonials" element={<Testimonials />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 <WhatsAppButton />
