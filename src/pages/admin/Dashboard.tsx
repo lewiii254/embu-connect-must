@@ -9,6 +9,8 @@ import { LogOut, Users, Calendar, Images } from "lucide-react";
 import MembersTab from "@/components/admin/MembersTab";
 import EventsTab from "@/components/admin/EventsTab";
 import GalleryTab from "@/components/admin/GalleryTab";
+import MessagesTab from "@/components/admin/MessagesTab";
+import TestimonialsTab from "@/components/admin/TestimonialsTab";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -94,7 +96,7 @@ const Dashboard = () => {
 
       <div className="container mx-auto px-4 py-8">
         <Tabs defaultValue="members" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3 max-w-md">
+          <TabsList className="grid w-full grid-cols-5 max-w-4xl">
             <TabsTrigger value="members">
               <Users className="mr-2 h-4 w-4" />
               Members
@@ -107,6 +109,8 @@ const Dashboard = () => {
               <Images className="mr-2 h-4 w-4" />
               Gallery
             </TabsTrigger>
+            <TabsTrigger value="messages">Messages</TabsTrigger>
+            <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
           </TabsList>
 
           <TabsContent value="members">
@@ -119,6 +123,12 @@ const Dashboard = () => {
 
           <TabsContent value="gallery">
             <GalleryTab />
+          </TabsContent>
+          <TabsContent value="messages">
+            <MessagesTab />
+          </TabsContent>
+          <TabsContent value="testimonials">
+            <TestimonialsTab />
           </TabsContent>
         </Tabs>
       </div>
